@@ -5,7 +5,6 @@ import cors from 'cors'
 const prisma = new PrismaClient()
 const app = express();
 app.use(express.json());
-
 app.use(cors({
     origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -32,7 +31,11 @@ app.post('/Ferramentas', async (req, res) => {
             NomeDeResponsavel: req.body.NomeDeResponsavel, 
             TipoDeCadastro: req.body.TipoDeCadastro,    
             Status:req.body.Status,
-            StatusDelete:req.body.StatusDelete
+            StatusDelete:req.body.StatusDelete,
+            ObsEmprestado:req.body.ObsEmprestado,
+            ResponsavelEmprestado:req.body.ResponsavelEmprestado,
+            DataEmprestado:req.body.DataEmprestado,
+            DataDevolvida: req.body.DataDevolvida
         }
     })
 
@@ -55,7 +58,11 @@ app.put('/Ferramentas/:id', async (req, res) => {
             NomeDeResponsavel: req.body.NomeDeResponsavel, 
             TipoDeCadastro: req.body.TipoDeCadastro,    
             Status:req.body.Status,
-            StatusDelete:req.body.StatusDelete
+            StatusDelete:req.body.StatusDelete,
+            ObsEmprestado:req.body.ObsEmprestado,
+            ResponsavelEmprestado:req.body.ResponsavelEmprestado,
+            DataEmprestado:req.body.DataEmprestado,
+            DataDevolvida: req.body.DataDevolvida
         }
     })
 
