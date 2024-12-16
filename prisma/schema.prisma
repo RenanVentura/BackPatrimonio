@@ -17,7 +17,7 @@ model Ferramentas {
   id                    String  @id @default(auto()) @map("_id") @db.ObjectId
   Nome                  String
   Valor                 Float
-  Patrimonio            String
+  Patrimonio            String @unique
   Observacao            String
   Empresa               String
   CentroDeCusto         String
@@ -29,4 +29,35 @@ model Ferramentas {
   ResponsavelEmprestado String?
   DataEmprestado        DateTime?
   DataDevolvida         DateTime?
+}
+
+model FerramentaHistorico {
+  id                    String  @id @default(auto()) @map("_id") @db.ObjectId
+  Nome                  String
+  Valor                 Float
+  Patrimonio            String
+  Observacao            String
+  Empresa               String
+  CentroDeCusto         String
+  NomeDeResponsavel     String
+  TipoDeCadastro        String
+  Status                String
+  StatusDelete          Boolean
+  ObsEmprestado         String?
+  ResponsavelEmprestado String?
+  DataEmprestado        String?
+  DataDevolvida         String?
+  DateAlterado          String?
+}
+
+model CentroCusto {
+  id                    String  @id @default(auto()) @map("_id") @db.ObjectId
+  CentroCusto           String
+  StatusDelete          Boolean
+}
+
+model Empresa {
+  id                    String  @id @default(auto()) @map("_id") @db.ObjectId
+  Empresa               String
+  StatusDelete          Boolean
 }
