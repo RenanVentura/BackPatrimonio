@@ -15,7 +15,7 @@ app.use(cors({
 
 
 app.get('/Ferramentas', async (req, res) => {
-    const { StatusDelete, TipoDeCadastro } = req.query;
+    const { StatusDelete, TipoDeCadastro, Status } = req.query;
   
     try {
       const whereConditions = {};
