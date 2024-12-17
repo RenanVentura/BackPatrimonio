@@ -14,36 +14,42 @@ app.use(cors({
 //################################################### Rota Get ######################################################################################################
 
 
-app.get('/Ferramentas',  async (req, res) => {
-    
-    const listaFerramenta = await prisma.ferramentas.findMany()
+app.get('/Ferramentas', async (req, res) => {
+    const { StatusDelete } = req.query;
+    const listaFerramenta = await prisma.ferramentas.findMany({
+        where: {
+            StatusDelete: StatusDelete === 'true' ? true : StatusDelete === 'false' ? false : undefined
+        }
+    })
 
     res.status(200).json(listaFerramenta)
-
 })
 
-app.get('/FerramentaHistorico',  async (req, res) => {
-    
-    const listaFerramenta = await prisma.ferramentaHistorico.findMany()
-
-    res.status(200).json(listaFerramenta)
-
+app.get('/FerramentaHistorico', async (req, res) => {
+    const listaFerramentaHistorico = await prisma.ferramentaHistorico.findMany()
+    res.status(200).json(listaFerramentaHistorico)
 })
 
-app.get('/Empresa',  async (req, res) => {
-    
-    const holding = await prisma.empresa.findMany()
+app.get('/Empresa', async (req, res) => {
+    const { StatusDelete } = req.query;
+    const holding = await prisma.empresa.findMany({
+        where: {
+            StatusDelete: StatusDelete === 'true' ? true : StatusDelete === 'false' ? false : undefined
+        }
+    })
 
     res.status(200).json(holding)
-
 })
 
-app.get('/CentroCusto',  async (req, res) => {
-    
-    const Classe = await prisma.centroCusto.findMany()
+app.get('/CentroCusto', async (req, res) => {
+    const { StatusDelete } = req.query;
+    const classe = await prisma.centroCusto.findMany({
+        where: {
+            StatusDelete: StatusDelete === 'true' ? true : StatusDelete === 'false' ? false : undefined
+        }
+    })
 
-    res.status(200).json(Classe)
-
+    res.status(200).json(classe)
 })
 
 //################################################### Rota Post ######################################################################################################
