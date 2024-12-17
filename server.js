@@ -15,15 +15,33 @@ app.use(cors({
 
 
 app.get('/Ferramentas', async (req, res) => {
-    const { StatusDelete } = req.query;
-    const listaFerramenta = await prisma.ferramentas.findMany({
-        where: {
-            StatusDelete: StatusDelete === 'true' ? true : StatusDelete === 'false' ? false : undefined
-        }
-    })
+    const { StatusDelete, TipoDeCadastro } = req.query;
+  
+    try {
+      const whereConditions = {};
+  
+      if (StatusDelete === 'true' || StatusDelete === 'false') {
+        whereConditions.StatusDelete = StatusDelete === 'true';
+      }
+  
+      if (TipoDeCadastro) {
+        whereConditions.TipoDeCadastro = TipoDeCadastro;
+      }
 
-    res.status(200).json(listaFerramenta)
-})
+      if (Status) {
+        whereConditions.Status = Status;
+      }
+  
+      const listaFerramenta = await prisma.ferramentas.findMany({
+        where: whereConditions
+      });
+  
+      res.status(200).json(listaFerramenta);
+    } catch (error) {
+      console.error('Erro ao buscar ferramentas:', error);
+      res.status(500).json({ error: 'Erro ao buscar ferramentas' });
+    }
+  });
 
 app.get('/FerramentaHistorico', async (req, res) => {
     const listaFerramentaHistorico = await prisma.ferramentaHistorico.findMany()
@@ -33,24 +51,25 @@ app.get('/FerramentaHistorico', async (req, res) => {
 app.get('/Empresa', async (req, res) => {
     const { StatusDelete } = req.query;
     const holding = await prisma.empresa.findMany({
-        where: {
-            StatusDelete: StatusDelete === 'true' ? true : StatusDelete === 'false' ? false : undefined
-        }
-    })
-
-    res.status(200).json(holding)
-})
-
-app.get('/CentroCusto', async (req, res) => {
+      where: {
+        StatusDelete: StatusDelete === 'true' ? true : StatusDelete === 'false' ? false : undefined
+      }
+    });
+  
+    res.status(200).json(holding);
+  });
+  
+  // Rota para obter centros de custo
+  app.get('/CentroCusto', async (req, res) => {
     const { StatusDelete } = req.query;
     const classe = await prisma.centroCusto.findMany({
-        where: {
-            StatusDelete: StatusDelete === 'true' ? true : StatusDelete === 'false' ? false : undefined
-        }
-    })
-
-    res.status(200).json(classe)
-})
+      where: {
+        StatusDelete: StatusDelete === 'true' ? true : StatusDelete === 'false' ? false : undefined
+      }
+    });
+  
+    res.status(200).json(classe);
+  });
 
 //################################################### Rota Post ######################################################################################################
 
