@@ -14,10 +14,10 @@ datasource db {
 }
 
 model Ferramentas {
-  id                    String  @id @default(auto()) @map("_id") @db.ObjectId
+  id                    String    @id @default(auto()) @map("_id") @db.ObjectId
   Nome                  String
   Valor                 Float
-  Patrimonio            String @unique
+  Patrimonio            String    @unique
   Observacao            String
   Empresa               String
   CentroDeCusto         String
@@ -29,10 +29,11 @@ model Ferramentas {
   ResponsavelEmprestado String?
   DataEmprestado        DateTime?
   DataDevolvida         DateTime?
+  StatusEmprestado      Boolean?
 }
 
 model FerramentaHistorico {
-  id                    String  @id @default(auto()) @map("_id") @db.ObjectId
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
   Nome                  String
   Valor                 Float
   Patrimonio            String
@@ -47,17 +48,18 @@ model FerramentaHistorico {
   ResponsavelEmprestado String?
   DataEmprestado        String?
   DataDevolvida         String?
+  StatusEmprestado      Boolean?
   DateAlterado          String?
 }
 
 model CentroCusto {
-  id                    String  @id @default(auto()) @map("_id") @db.ObjectId
-  CentroCusto           String
-  StatusDelete          Boolean
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  CentroCusto  String
+  StatusDelete Boolean
 }
 
 model Empresa {
-  id                    String  @id @default(auto()) @map("_id") @db.ObjectId
-  Empresa               String
-  StatusDelete          Boolean
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  Empresa      String
+  StatusDelete Boolean
 }

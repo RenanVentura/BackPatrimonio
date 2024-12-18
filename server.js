@@ -15,13 +15,17 @@ app.use(cors({
 
 
 app.get('/Ferramentas', async (req, res) => {
-    const { StatusDelete, TipoDeCadastro, Status } = req.query;
+    const { StatusDelete, TipoDeCadastro, Status, StatusEmprestado } = req.query;
   
     try {
       const whereConditions = {};
   
       if (StatusDelete === 'true' || StatusDelete === 'false') {
         whereConditions.StatusDelete = StatusDelete === 'true';
+      }
+
+      if (StatusEmprestado === 'true' || StatusEmprestado === 'false') {
+        whereConditions.StatusEmprestado = StatusEmprestado === 'true';
       }
   
       if (TipoDeCadastro) {
@@ -91,7 +95,8 @@ app.post('/Ferramentas', async (req, res) => {
             ObsEmprestado:req.body.ObsEmprestado,
             ResponsavelEmprestado:req.body.ResponsavelEmprestado,
             DataEmprestado:req.body.DataEmprestado,
-            DataDevolvida: req.body.DataDevolvida
+            DataDevolvida: req.body.DataDevolvida,
+            StatusEmprestado: req.body.StatusEmprestado
         }
     })
 
@@ -116,7 +121,8 @@ app.post('/FerramentaHistorico', async (req, res) => {
             ResponsavelEmprestado:req.body.ResponsavelEmprestado,
             DataEmprestado:req.body.DataEmprestado,
             DataDevolvida: req.body.DataDevolvida,
-            DateAlterado: req.body.DateAlterado
+            DateAlterado: req.body.DateAlterado,
+            StatusEmprestado: req.body.StatusEmprestado
         }
     })
 
@@ -169,7 +175,8 @@ app.put('/Ferramentas/:id', async (req, res) => {
             ObsEmprestado:req.body.ObsEmprestado,
             ResponsavelEmprestado:req.body.ResponsavelEmprestado,
             DataEmprestado:req.body.DataEmprestado,
-            DataDevolvida: req.body.DataDevolvida
+            DataDevolvida: req.body.DataDevolvida,
+            StatusEmprestado: req.body.StatusEmprestado
         }
     })
 
@@ -198,7 +205,8 @@ app.put('/FerramentaHistorico/:id', async (req, res) => {
             ResponsavelEmprestado:req.body.ResponsavelEmprestado,
             DataEmprestado:req.body.DataEmprestado,
             DataDevolvida: req.body.DataDevolvida,
-            DateAlterado: req.body.DateAlterado
+            DateAlterado: req.body.DateAlterado,
+            StatusEmprestado: req.body.StatusEmprestado
         }
     })
 
