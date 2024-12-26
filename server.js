@@ -217,7 +217,7 @@ app.put('/Empresa/:id', async (req, res) => {
 
     await prisma.empresa.update({
         where: {
-            id:req.body.id
+            id:req.params.id
         },
         data: {
             Empresa: req.body.Empresa,
@@ -232,7 +232,7 @@ app.put('/CentroCusto/:id', async (req, res) => {
 
     await prisma.centroCusto.update({
         where:{
-            id:req.body.id
+            id:req.params.id
         },
         data: {
             CentroCusto: req.body.CentroCusto,
