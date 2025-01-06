@@ -15,37 +15,71 @@ app.use(cors({
 
 
 app.get('/Ferramentas', async (req, res) => {
-    const { StatusDelete, TipoDeCadastro, Status, StatusEmprestado } = req.query;
+    const { 
+        StatusDelete, 
+        TipoDeCadastro, 
+        Status, 
+        StatusEmprestado, 
+        Empresa, 
+        CentroDeCusto, 
+        DataInicialEmprestado, 
+        DataFinalEmprestado, 
+        DataInicialDevolvida, 
+        DataFinalDevolvida 
+    } = req.query;
   
     try {
-      const whereConditions = {};
-  
-      if (StatusDelete === 'true' || StatusDelete === 'false') {
-        whereConditions.StatusDelete = StatusDelete === 'true';
-      }
+        const whereConditions = {};
 
-      if (StatusEmprestado === 'true' || StatusEmprestado === 'false') {
-        whereConditions.StatusEmprestado = StatusEmprestado === 'true';
-      }
-  
-      if (TipoDeCadastro) {
-        whereConditions.TipoDeCadastro = TipoDeCadastro;
-      }
+        if (StatusDelete === 'true' || StatusDelete === 'false') {
+            whereConditions.StatusDelete = StatusDelete === 'true';
+        }
 
-      if (Status) {
-        whereConditions.Status = Status;
-      }
-  
-      const listaFerramenta = await prisma.ferramentas.findMany({
-        where: whereConditions
-      });
-  
-      res.status(200).json(listaFerramenta);
+        if (StatusEmprestado === 'true' || StatusEmprestado === 'false') {
+            whereConditions.StatusEmprestado = StatusEmprestado === 'true';
+        }
+
+        if (TipoDeCadastro) {
+            whereConditions.TipoDeCadastro = TipoDeCadastro;
+        }
+
+        if (Status) {
+            whereConditions.Status = Status;
+        }
+
+        if (Empresa) {
+            whereConditions.Empresa = Empresa;
+        }
+
+        if (CentroDeCusto) {
+            whereConditions.CentroDeCusto = CentroDeCusto;
+        }
+
+        if (DataInicialEmprestado && DataFinalEmprestado) {
+            whereConditions.DataEmprestado = {
+                gte: new Date(DataInicialEmprestado),
+                lte: new Date(DataFinalEmprestado),
+            };
+        }
+
+        if (DataInicialDevolvida && DataFinalDevolvida) {
+            whereConditions.DataDevolvida = {
+                gte: new Date(DataInicialDevolvida),
+                lte: new Date(DataFinalDevolvida),
+            };
+        }
+
+        const listaFerramenta = await prisma.ferramentas.findMany({
+            where: whereConditions,
+        });
+
+        res.status(200).json(listaFerramenta);
     } catch (error) {
-      console.error('Erro ao buscar ferramentas:', error);
-      res.status(500).json({ error: 'Erro ao buscar ferramentas' });
+        console.error('Erro ao buscar ferramentas:', error);
+        res.status(500).json({ error: 'Erro ao buscar ferramentas' });
     }
-  });
+});
+
 
 app.get('/FerramentaHistorico', async (req, res) => {
     const listaFerramentaHistorico = await prisma.ferramentaHistorico.findMany()
