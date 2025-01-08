@@ -13,22 +13,17 @@ app.use(cors({
 
 //################################################### Rota Get ######################################################################################################
 
-
 app.get('/Ferramentas', async (req, res) => {
-    const { 
-        StatusDelete, 
-        TipoDeCadastro, 
-        Status, 
-        StatusEmprestado, 
-        Empresa, 
-        CentroDeCusto, 
-        DataInicialEmprestado, 
-        DataFinalEmprestado, 
-        DataInicialDevolvida, 
-        DataFinalDevolvida 
-    } = req.query;
-  
     try {
+        const {
+            StatusDelete,
+            StatusEmprestado,
+            TipoDeCadastro,
+            Status,
+            Empresa,
+            CentroDeCusto,
+        } = req.query;
+
         const whereConditions = {};
 
         if (StatusDelete === 'true' || StatusDelete === 'false') {
@@ -38,7 +33,6 @@ app.get('/Ferramentas', async (req, res) => {
         if (StatusEmprestado === 'true' || StatusEmprestado === 'false') {
             whereConditions.StatusEmprestado = StatusEmprestado === 'true';
         }
-
         if (TipoDeCadastro) {
             whereConditions.TipoDeCadastro = TipoDeCadastro;
         }
@@ -53,20 +47,6 @@ app.get('/Ferramentas', async (req, res) => {
 
         if (CentroDeCusto) {
             whereConditions.CentroDeCusto = CentroDeCusto;
-        }
-
-        if (DataInicialEmprestado && DataFinalEmprestado) {
-            whereConditions.DataEmprestado = {
-                gte: new Date(DataInicialEmprestado),
-                lte: new Date(DataFinalEmprestado),
-            };
-        }
-
-        if (DataInicialDevolvida && DataFinalDevolvida) {
-            whereConditions.DataDevolvida = {
-                gte: new Date(DataInicialDevolvida),
-                lte: new Date(DataFinalDevolvida),
-            };
         }
 
         const listaFerramenta = await prisma.ferramentas.findMany({
@@ -304,4 +284,3 @@ app.delete('/FerramentaHistorico/:id', async (req, res) => {
 
 
 app.listen(3000);
-
