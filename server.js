@@ -5,11 +5,24 @@ import cors from 'cors'
 const prisma = new PrismaClient()
 const app = express();
 app.use(express.json());
+
+
+const allowedOrigins = [
+    'http://localhost:5173', 
+    'https://patrimonioqually.vercel.app'
+];
+
 app.use(cors({
-    // origin: 'http://localhost:5173',
-    origin: 'patrimonioqually.vercel.app',
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-}))
+    credentials: true,
+}));
 
 
 //################################################### Rota Get ######################################################################################################
